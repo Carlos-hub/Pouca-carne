@@ -6,19 +6,64 @@
 export function Signup(){
 
  return(
-    <div className=" bg-[#361F17] w-2/5 align-middle justify-items-center rounded-xl h-[25rem] self-center mx-auto top-4 mt-10">
-      <div className="mx-5">
+    <div className=" bg-[#361F17] w-3/5 align-middle justify-items-center rounded-xl h-fit self-center mx-auto top-4 mt-10 p-3">
+      <div className="mx-auto h-36 mb-4">
         <Logo/>
       </div>
-      <div className="justify-items-center self-center mx-5">
-       <label className="mt-2">
-       <p className="text-[#C9E265]">Login</p>
-       <Input classname="block rounded-md p-1 w-full" type="email" title="Login" placeholder="Login"/>
-       </label>
-       <label className="mt-2">
-       <p className="text-[#C9E265]">Password</p>
-       <Input classname="block rounded-md p-1 w-full" type="password" title="Password" placeholder="Password"/>
-       </label>
+      <div>
+        <div className="justify-items-center self-center mx-5">
+         <div className="grid grid-cols-2 gap-2">
+            <label className="mt-2">
+            <p className="text-[#C9E265]">Nome</p>
+            <Input classname="flex rounded-md p-1 w-full" type="text" title="name" placeholder="Nome"/>
+            </label>
+            <label className="mt-2">
+            <p className="text-[#C9E265]">Nascimento</p>
+            <Input classname="flex rounded-md p-1 w-full" type="date" title="date" placeholder="XX/XX/XXXX"/>
+            </label>
+         </div>
+         <div className="grid grid-cols-2 gap-2">
+             <label className="mt-2">
+             <p className="text-[#C9E265]">CPF</p>
+             <Input classname="flex rounded-md p-1 w-full" type="text" title="cpf" placeholder="XXX.XXX.XXX-XX"/>
+             </label>
+             <label className="mt-2">
+             <p className="text-[#C9E265]">Telefone</p>
+             <Input classname="flex rounded-md p-1 w-full" type="tel" title="phone" placeholder="(XX) X XXXX-XXXX"/>
+             </label>
+         </div>
+         <label className="mt-2">
+             <p className="text-[#C9E265]">E-mail</p>
+             <Input classname="flex rounded-md p-1 w-full" type="email" title="email" placeholder="teste@gmail.com"/>
+         </label>
+         <div className="w-1/2">
+         <label className="mt-2">
+           <p className="text-[#C9E265]">Senha</p>
+           <Input classname="flex rounded-md p-1 w-full" type="password" title="email" placeholder="**********"/>
+         </label>
+         </div>
+         <div className="w-1/2">
+         <label className="mt-2">
+           <p className="text-[#C9E265]">Repita sua senha</p>
+           <Input classname="flex rounded-md p-1 w-full" type="password" title="email" placeholder="**********"/>
+         </label>
+         </div>
+         <div className="grid grid-cols-2 gap-2">
+           <div className="w-1/2">
+           <label className="mt-2">
+             <p className="text-[#C9E265]">Recaptcha</p>
+           </label>
+           </div>
+           <div className="w-1/2  justify-self-end">
+           <label className="mt-2">
+             <button className="bg-[#C9E265] text-black p-3 rounded-xl">Cadastrar</button>
+           </label>
+           </div>
+         </div>
+         <div>
+          
+         </div>
+        </div>
       </div>
     </div>
    )
