@@ -3,9 +3,14 @@ interface propsInput{
  title:string;
  placeholder:string;
  classname:string;
+ type:string;
+ icon?:any;
 }
 export function Input(props:propsInput){
  return(
-  <input className={props.classname}  title={props.title} placeholder={props.placeholder}/>
+  <div className="flex bg-white rounded-xl p-2">
+    <input className={props.classname}  type={props.type} title={props.title} placeholder={props.placeholder}/>
+    {props.icon}
+  </div>
  )
 }
