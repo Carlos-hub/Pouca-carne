@@ -1,6 +1,11 @@
 {
-  "rewrites": [
-    { "source": "/login", "destination": "/login" },
-    { "source": "/signup", "destination": "/signup" }
-  ]
+	"github": {
+		"silent": true
+	},
+	"rewrites": [
+		{
+			"source": "(.*)",
+			"destination": "/index.html"
+		}
+	]
 }
