@@ -6,19 +6,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 export function Login(){
+  const [token,setToken] = useState(null)
   const Navigate = useNavigate();
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
+  
 
-  async function onSubmit(e:any){
+   function onSubmit(e:any){
     e.preventDefault();
-      console.log(email,password);
-      const reqLogin = await axios.post(`https://serveless-pouca-carne-production.up.railway.app/client/login`,{
+      axios
+      .post(`http://localhost:3333/client/login`,{
         email,
         password
-      })
-      console.log(reqLogin);
-      
+      }).then(response => response.json())
+      .then(json =>console.log(json))
   }
   function signup(){
     Navigate('/signup');
