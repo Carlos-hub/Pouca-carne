@@ -1,7 +1,7 @@
 export function burguer(){
 
  return (
-  <svg width="407" height="265" viewBox="0 0 407 265" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <svg width="407" height="265" viewBox="0 0 407 265" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
 <path d="M0 16C0 7.16344 7.16344 0 16 0H391C399.837 0 407 7.16344 407 16V265H0V16Z" fill="url(#pattern0)"/>
 <defs>
 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">

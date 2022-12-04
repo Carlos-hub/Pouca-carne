@@ -10,7 +10,7 @@ export function Login(){
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
 
-  async function onSubmit(e){
+  async function onSubmit(e:any){
     e.preventDefault();
       console.log(email,password);
       const reqLogin = await axios.post(`https://serveless-pouca-carne-production.up.railway.app/client/login`,{
@@ -32,11 +32,11 @@ export function Login(){
     <div className="justify-items-center self-center mx-5">
        <label className="mt-2">
          <p className="text-[#C9E265]">Login</p>
-         <Input classname="block rounded-md p-1 w-full border-0" type="email" title="Login" placeholder="Login" onChange={(e)=>setEmail(e.target.value)} value={email} icon={<User size={32}/>}/>
+         <Input classname="block rounded-md p-1 w-full border-0" type="email" title="Login" placeholder="Login" onChange={(e:any)=>setEmail(e.target.value)} value={email} icon={<User size={32}/>}/>
        </label>
        <label className="mt-2">
          <p className="text-[#C9E265]">Password</p>
-         <Input classname="block rounded-md p-1 w-full border-0" type="password" title="Password" placeholder="Password" value={password}  onChange={(e) =>setPassword(e.target.value)} icon={<Lock size={32} className="flex"/>}/>
+         <Input classname="block rounded-md p-1 w-full border-0" type="password" title="Password" placeholder="Password" value={password}  onChange={(e:any) =>setPassword(e.target.value)} icon={<Lock size={32} className="flex"/>}/>
       </label>
     </div>
     <div className="m-5">
