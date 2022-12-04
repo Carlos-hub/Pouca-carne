@@ -18,9 +18,8 @@ export function Login(){
       .post(`http://localhost:3333/client/login`,{
         email,
         password
-      }).then(response => response.json())
-      .then(json =>console.log(json))
-  }
+      })
+    }
   function signup(){
     Navigate('/signup');
   }
