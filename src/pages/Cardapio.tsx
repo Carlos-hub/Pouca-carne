@@ -4,7 +4,7 @@ import { Header } from "../components/Header";
 import { Produto } from "../components/Produto";
 
 export function Cardapio(){
- const [cardapio,setCardapio] = useState([])
+ const [cardapio,setCardapio] = useState<any[]>([])
 
  const getProdutos = async () =>{
   try{
