@@ -10,7 +10,7 @@ export function Cardapio(){
  const getProdutos = async () =>{
   try{
    const response = await axios.get(
-    "http://localhost:3333/client/produtos"
+    "https://serveless-pouca-carne-production.up.railway.app/client/produtos"
    );
    const data = response.data;
    setCardapio(data)

@@ -32,7 +32,7 @@ export function Signup(){
       }
       console.log("email "+email, "senha " +senha,"nome "+nome,"cpf "+cpf,"telefone "+telefone,"datanascimento "+datanascimento)
         try{
-         axios.post(`http://localhost:3333/client/signup`,data)
+         axios.post(`${process.env.API_URL}/client/signup`,data)
          .then((res) =>{
            console.log(res)
            Navigate('/');
