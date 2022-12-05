@@ -11,9 +11,7 @@ export function Login(){
   const [senha,setSenha] = useState('')
   const [errCredentials,setErrCredentials] = useState(false)
 
-  if(errCredentials){
-    setTimeout(() => setErrCredentials(false),3000)
-  }
+
 
 
   function onSubmit(e:any){
@@ -27,12 +25,9 @@ export function Login(){
       axios.post(`http://localhost:3333/client/login`,data)
       .then((res) =>{
         console.log(res)
-        // if(res.data.message === "Credentials invalid"){
-        //   return(<h1>Credentials invalid</h1>)
-        // }
-        // localStorage.setItem("token",res.data.token)
-        // localStorage.setItem("id",res.data.decodes.payload.sub)
-        // Navigate('/')
+        localStorage.setItem("token",res.data.token)
+        localStorage.setItem("id",res.data.decodes.payload.sub)
+        Navigate('/')
       })
       .catch((err) =>{
         if (err.response.data === 'Credentials invalid') {

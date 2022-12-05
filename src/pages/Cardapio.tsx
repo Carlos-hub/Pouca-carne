@@ -9,11 +9,10 @@ export function Cardapio(){
  const getProdutos = async () =>{
   try{
    const response = await axios.get(
-    "https://serveless-pouca-carne-production.up.railway.app/client/produtos"
+    "http://localhost:3333/client/produtos"
    );
    const data = response.data;
    setCardapio(data)
-   console.log(data)
   }catch(error){
    console.log(error);
   }
@@ -30,7 +29,7 @@ export function Cardapio(){
     ) : (
      cardapio.map((cardapio) =>(
      
-      <Produto id={cardapio.id} imagem={cardapio.imagem} title={cardapio.nome} description={cardapio.descricao} preco={cardapio.valor}/>
+      <Produto id={cardapio.id} imagem={cardapio.imagem} title={cardapio.nome} description={cardapio.descricao} preco={cardapio.valor} key={cardapio.id}/>
 
      ))
     )}
