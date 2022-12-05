@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react";
+import Loading from "react-loading";
 import { Header } from "../components/Header";
 import { Produto } from "../components/Produto";
 
@@ -25,7 +26,8 @@ export function Cardapio(){
   <h1 className="px-auto">Cardapio</h1>
   <div className="grid grid-cols-3 gap-3 p-4">
     {cardapio.length === 0 ? (
-    <p className="text-center">Carregando...</p>
+    // <p className="text-center">Carregando...</p>
+    <Loading type="balls"/>
     ) : (
      cardapio.map((cardapio) =>(
      

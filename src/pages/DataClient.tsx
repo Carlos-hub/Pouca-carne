@@ -11,7 +11,7 @@ export function DataClient(){
  const getDados = async () =>{
   try{
    const response = await axios.post(
-    "http://localhost:3333/client/data/",d
+    "https://serveless-pouca-carne-production.up.railway.app/client/data/",d
    );
    const data = response.data;
    console.log(data)
