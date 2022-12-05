@@ -1,7 +1,6 @@
 import { Logo } from "../components/assets-icons/Logo";
 import { Input } from "../components/Input";
-import env from "react-dotenv";
-import { User, Lock } from "phosphor-react"
+import { User, Lock } from "phosphor-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -9,20 +8,35 @@ export function Login(){
   const [token,setToken] = useState(null)
   const Navigate = useNavigate();
   const [email,setEmail] = useState('')
-  const [password,setPassword] = useState('')
-  
+  const [senha,setSenha] = useState('')
 
-   function onSubmit(e:any){
+
+  function onSubmit(e:any){
     e.preventDefault();
-      axios
-      .post(`http://localhost:3333/client/login`,{
+      const data = {
         email,
-        password
+        senha
+      }
+      console.log(email,senha)
+     try{
+      axios.post(`http://localhost:3333/client/login`,data)
+      .then((res) =>{
+        console.log(res.data.message)
+        if(res.data.message === "Credentials invalid"){
+          return(<h1>Credentials invalid</h1>)
+        }
+        localStorage.setItem("token",res.data.token)
+        localStorage.setItem("id",res.data.decodes.payload.sub)
+        Navigate('/')
       })
+      }catch(err){
+      console.log(err.response.data.message)
+     }
     }
   function signup(){
     Navigate('/signup');
   }
+
  return(
   <div className="bg-[#361F17] tablet:w-3/5 align-middle justify-items-center rounded-xl md:h-[30rem] sm:h-full self-center mx-auto md:top-4 sm:top-0 mt-10">
     <div className="mx-5 max-w-[100%]">
@@ -35,8 +49,8 @@ export function Login(){
          <Input classname="block rounded-md p-1 w-full border-0" type="email" title="Login" placeholder="Login" onChange={(e:any)=>setEmail(e.target.value)} value={email} icon={<User size={32}/>}/>
        </label>
        <label className="mt-2">
-         <p className="text-[#C9E265]">Password</p>
-         <Input classname="block rounded-md p-1 w-full border-0" type="password" title="Password" placeholder="Password" value={password}  onChange={(e:any) =>setPassword(e.target.value)} icon={<Lock size={32} className="flex"/>}/>
+         <p className="text-[#C9E265]">senha</p>
+         <Input classname="block rounded-md p-1 w-full border-0" type="senha" title="senha" placeholder="senha" value={senha}  onChange={(e:any) =>setSenha(e.target.value)} icon={<Lock size={32} className="flex"/>}/>
       </label>
     </div>
     <div className="m-5">

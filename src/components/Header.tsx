@@ -11,7 +11,7 @@ export function Header(){
      <LogoMin />
      </div>
      <div className="my-auto mx-10">
-     <a href="" className="float-right my-auto bg-[#C9E265] flex px-4 py-2 text-xl rounded-2xl hover:bg-[#bede40]"> Login  <User size={24} weight="duotone" /></a>
+     <a href="/login" className="float-right my-auto bg-[#C9E265] flex px-4 py-2 text-xl rounded-2xl hover:bg-[#bede40]"> Login  <User size={24} weight="duotone" /></a>
      </div>
     </div>
    )
