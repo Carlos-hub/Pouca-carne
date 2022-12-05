@@ -11,11 +11,11 @@ interface ICreateProdutos{
 
 export function Produto(props:ICreateProdutos){
    const Navigate = useNavigate();
-   function toShop(e: MouseEvent<Element, MouseEvent>){
+   function toShop(e: MouseEvent<SVGSVGElement, MouseEvent>){
       e.preventDefault();
       Navigate('/shop')
    }
-   function toLogin(e: MouseEvent<Element, MouseEvent>){
+   function toLogin(e: MouseEvent<SVGSVGElement, MouseEvent>){
       e.preventDefault();
       Navigate('/login')
    }
