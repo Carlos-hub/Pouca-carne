@@ -2,9 +2,20 @@ import axios from "axios";
 import { NavigationArrow, User } from "phosphor-react";
 import { useEffect, useState } from "react";
 
+interface IClient{
+  length: number;
+  id?:string;
+  nome?:string;
+  email?:string;
+  cpf?:string;
+  datanascimento?:string;
+  telefone?:string;
+}
 
 export function DataClient(){
- const [dados,setDados] = useState<any[]>([])
+ const [dados,setDados] = useState<IClient>({
+   length: 0
+ })
  const d = {
   id : localStorage.getItem('id')
  } 
@@ -13,7 +24,7 @@ export function DataClient(){
    const response = await axios.post(
     "https://serveless-pouca-carne-production.up.railway.app/client/data/",d
    );
-   const data = response.data;
+   const data:any = response.data;
    console.log(data)
    setDados(data)
   }catch(error){
