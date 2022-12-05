@@ -9,6 +9,11 @@ export function Login(){
   const Navigate = useNavigate();
   const [email,setEmail] = useState('')
   const [senha,setSenha] = useState('')
+  const [errCredentials,setErrCredentials] = useState(false)
+
+  if(errCredentials){
+    setTimeout(() => setErrCredentials(false),3000)
+  }
 
 
   function onSubmit(e:any){
@@ -21,16 +26,23 @@ export function Login(){
      try{
       axios.post(`http://localhost:3333/client/login`,data)
       .then((res) =>{
-        console.log(res.data.message)
-        if(res.data.message === "Credentials invalid"){
-          return(<h1>Credentials invalid</h1>)
+        console.log(res)
+        // if(res.data.message === "Credentials invalid"){
+        //   return(<h1>Credentials invalid</h1>)
+        // }
+        // localStorage.setItem("token",res.data.token)
+        // localStorage.setItem("id",res.data.decodes.payload.sub)
+        // Navigate('/')
+      })
+      .catch((err) =>{
+        if (err.response.data === 'Credentials invalid') {
+          console.log(err.response.data);
+          console.log(err.response.status);
+          setErrCredentials(true)
         }
-        localStorage.setItem("token",res.data.token)
-        localStorage.setItem("id",res.data.decodes.payload.sub)
-        Navigate('/')
       })
       }catch(err){
-      console.log(err.response.data.message)
+      console.error(err)
      }
     }
   function signup(){
@@ -38,7 +50,7 @@ export function Login(){
   }
 
  return(
-  <div className="bg-[#361F17] tablet:w-3/5 align-middle justify-items-center rounded-xl md:h-[30rem] sm:h-full self-center mx-auto md:top-4 sm:top-0 mt-10">
+  <div className="bg-[#361F17] tablet:w-3/5 align-middle justify-items-center rounded-xl md:h-[30rem] sm:h-full self-center mx-auto md:top-4 sm:top-0 mt-10 mb-2">
     <div className="mx-5 max-w-[100%]">
       <Logo/>
     </div>
@@ -61,6 +73,12 @@ export function Login(){
        <div className="text-center mt-6 text-white hover:underline-offset-1">
          <a href="#" className=""> Esqueci minha senha</a>
        </div>
+       
+       {errCredentials?(
+        <span id="credentialsInvalid" className="block bg-[red] text-black animate-pulse relative top-10 left-[66%] p-2 rounded-lg">Usuário ou senha incorreto</span>
+       ):(
+        <span id="credentialsInvalid" className="hidden bg-[red] text-black animate-pulse relative top-10 left-[66%] p-2 rounded-lg">Usuário ou senha incorreto</span>
+       )}
     </div>
 
     </form>
