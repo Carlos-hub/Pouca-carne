@@ -14,7 +14,7 @@ export function Header(){
       {!localStorage.getItem('token')?(
          <a href="/login" className="float-right my-auto bg-[#C9E265] flex px-4 py-2 text-xl rounded-2xl hover:bg-[#bede40]"> Login  <User size={24} weight="duotone" /></a>
       ):(
-         <a href="/client/dados" className="float-right my-auto bg-[#C9E265] flex p-1 text-xl rounded-2xl hover:bg-[#bede40]"> <UserCircle size={40} weight="bold" /></a>
+         <a href="/dados" className="float-right my-auto bg-[#C9E265] flex p-1 text-xl rounded-2xl hover:bg-[#bede40]"> <UserCircle size={40} weight="bold" /></a>
       )}
      </div>
     </div>
