@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Plus } from "phosphor-react";
 import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +14,22 @@ export function Produto(props:ICreateProdutos){
    const Navigate = useNavigate();
    function toShop(e:any){
       e.preventDefault();
+      const body ={
+         id:props.id,
+         preco:props.preco,
+         id_cliente:localStorage.getItem('id'),
+         forma_pagamento:""
+
+      }
+      const header:any = {
+         token:localStorage.getItem('token')
+      }
+      const criaPedido =() =>{
+         axios.post("http://localhost:3333/client/delivery",body,header)
+      }
       Navigate('/shop')
    }
+
    function toLogin(e:any){
       e.preventDefault();
       Navigate('/login')

@@ -22,7 +22,7 @@ export function Login(){
       }
       console.log(email,senha)
      try{
-      axios.post(`https://serveless-pouca-carne-production.up.railway.app/client/login`,data)
+      axios.post(`http://localhost:3333/client/login`,data)
       .then((res) =>{
         console.log(res)
         localStorage.setItem("token",res.data.token)

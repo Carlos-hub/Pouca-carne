@@ -4,6 +4,8 @@ import { Cardapio } from './pages/Cardapio';
 import { DataClient } from './pages/DataClient';
 import { Index } from './pages/Index';
 import { Login } from './pages/Login';
+import { Pedidos } from './pages/Pedidos';
+import { PedidosAdm } from './pages/PedidosAdm';
 import { Signup } from './pages/Signup';
 
 export function Router(){
@@ -14,6 +16,7 @@ export function Router(){
             <Route path="/" element={<Cardapio/>} />
             <Route path='/signup/product' element={<AddProduto/>}/>
             <Route path="/dados" element={<DataClient/>} />
+            <Route path="/shop/adm" element={<Pedidos/>}/>
         </Routes>
     )
 }

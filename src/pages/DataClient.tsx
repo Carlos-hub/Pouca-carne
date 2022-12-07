@@ -16,13 +16,19 @@ export function DataClient(){
  const [dados,setDados] = useState<IClient>({
    length: 0
  })
- const d = {
+ const header:any = {
+  token:localStorage.getItem('token'),
   id : localStorage.getItem('id')
- } 
+ }
  const getDados = async () =>{
   try{
-   const response = await axios.post(
-    "https://serveless-pouca-carne-production.up.railway.app/client/data/",d
+   const response = await axios.get(
+    "http://localhost:3333/client/data/",{
+      headers:{
+        token:localStorage.getItem('token'),
+        id : localStorage.getItem('id')
+      }
+    }
    );
    const data:any = response.data;
    console.log(data)
@@ -56,7 +62,7 @@ export function DataClient(){
      )}
      <div className="bg-[#582222] grid grid-row-auto space-y-4 mb-2">
       <span className="mx-auto flex text-xl">Meus endereços <NavigationArrow size={32} weight="bold" /></span>
-      <textarea className="bg-transparent p-4 m-4 resize-none"/>
+      
       <textarea className="bg-transparent p-4 m-4 resize-none"/>
      </div>
      </div>
