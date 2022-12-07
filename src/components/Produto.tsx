@@ -25,7 +25,7 @@ export function Produto(props:ICreateProdutos){
          token:localStorage.getItem('token')
       }
       const criaPedido =() =>{
-         axios.post("http://localhost:3333/client/delivery",body,header)
+         axios.post("https://serveless-pouca-carne-production.up.railway.app/client/delivery",body,header)
       }
       Navigate('/shop')
    }

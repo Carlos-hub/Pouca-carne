@@ -9,7 +9,7 @@ export function Pedidos(){
  const getPedidos = async () =>{
   try{
    const response = await axios.get(
-    "http://localhost:3333/company/pedidos/",{
+    "https://serveless-pouca-carne-production.up.railway.app/company/pedidos/",{
      headers: {
        token
      }
