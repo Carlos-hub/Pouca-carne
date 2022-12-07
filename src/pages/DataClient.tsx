@@ -23,7 +23,7 @@ export function DataClient(){
  const getDados = async () =>{
   try{
    const response = await axios.get(
-    "http://localhost:3333/client/data/",{
+    "https://serveless-pouca-carne-production.up.railway.app/client/data/",{
       headers:{
         token:localStorage.getItem('token'),
         id : localStorage.getItem('id')
@@ -41,9 +41,9 @@ export function DataClient(){
   getDados();
  },[]);
  return(
-  <div>
+  <div className="h-full">
 
-   <div className="grid grid-cols-2 px-3 h-full">
+   <div className="grid grid-cols-2 px-3 h-[50vw] pb-3">
   {dados.length === 0 ? (
    <p className="text-center">Carregando...</p>
    ) : (
@@ -60,10 +60,10 @@ export function DataClient(){
        
       </div>
      )}
-     <div className="bg-[#582222] grid grid-row-auto space-y-4 mb-2">
-      <span className="mx-auto flex text-xl">Meus endereços <NavigationArrow size={32} weight="bold" /></span>
-      
-      <textarea className="bg-transparent p-4 m-4 resize-none"/>
+     <div className="bg-[#582222] grid grid-row-auto space-y-4 pb-5 h-full rounded-md">
+      <span className="mx-auto flex text-xl py-auto">Meus endereços <NavigationArrow size={30} weight="bold" /></span>
+      <textarea placeholder="Digite seu endereço" className="bg-transparent p-4 mx-4 resize-none border-2 border-white mb-3 rounded-xl"/>
+      <textarea placeholder="Digite seu endereço" className="bg-transparent p-4 mx-4 resize-none border-2 border-white mb-3 rounded-xl"/>
      </div>
      </div>
    </div>

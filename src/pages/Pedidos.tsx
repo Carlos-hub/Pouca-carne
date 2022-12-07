@@ -9,24 +9,24 @@ export function Pedidos(){
  const getPedidos = async () =>{
   try{
    const response = await axios.get(
-    "http://localhost:3333/client/pedidos",{
+    "http://localhost:3333/company/pedidos/",{
      headers: {
        token
      }
     });
    const data = response.data;
    setPedidos(data)
-   console.log(data)
   }catch(error){
-   console.log(error);
+
   }
  }
  useEffect(() =>{
   getPedidos();
  },[]);
+ setTimeout(()=>{getPedidos(),10000});
 
  return (
-   <div className="mx-auto bg-[#72584E]">
+   <div className="mx-auto bg-[#72584E] mb-1">
     <HeaderAdm/>
      <h2 className="text-4xl text-center py-2 text-white">Pedidos</h2>
        {pedidos.length === 0?(

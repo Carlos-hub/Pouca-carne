@@ -11,7 +11,7 @@ export function HeaderAdm(){
      <LogoMin />
      </div>
      <div className="my-auto mx-10">
-         <a href="/dados" className="float-right my-auto bg-[#C9E265] flex p-1 text-xl rounded-2xl hover:bg-[#bede40]"> <Hamburger size={32} weight="bold" /></a>
+         <a href="/shop/adm" className="float-right my-auto bg-[#C9E265] flex p-1 text-xl rounded-2xl hover:bg-[#bede40]"> <Hamburger size={32} weight="bold" /></a>
      </div>
     </div>
    )
