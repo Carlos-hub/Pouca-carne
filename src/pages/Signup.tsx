@@ -95,7 +95,7 @@ export function Signup(){
            </div>
            <div className="w-1/2  justify-self-end">
            <label className="mt-2">
-             {senha!=senhaConfirma ||senha!=""?
+             {senha!=senhaConfirma?
              (
               <button disabled className="bg-[#C9E265] text-black p-3 rounded-xl opacity-50" onClick={e =>onSubmit(e)}>Cadastrar</button>
               ):(
