@@ -32,7 +32,7 @@ export function Signup(){
       }
       console.log("email "+email, "senha " +senha,"nome "+nome,"cpf "+cpf,"telefone "+telefone,"datanascimento "+datanascimento)
         try{
-         axios.post(`http://localhost:3333/client/signup`,data)
+         axios.post(`https://serveless-pouca-carne-production.up.railway.app/client/signup`,data)
          .then((res) =>{
            console.log(res)
            Navigate('/');
@@ -95,7 +95,7 @@ export function Signup(){
            </div>
            <div className="w-1/2  justify-self-end">
            <label className="mt-2">
-             {senha!=senhaConfirma?
+             {senha!=senhaConfirma ||senha!=""?
              (
               <button disabled className="bg-[#C9E265] text-black p-3 rounded-xl opacity-50" onClick={e =>onSubmit(e)}>Cadastrar</button>
               ):(
