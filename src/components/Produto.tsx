@@ -2,6 +2,7 @@ import axios from "axios";
 import { Plus } from "phosphor-react";
 import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast,ToastContainer } from "react-toastify";
 interface ICreateProdutos{
  id:string;
  imagem:string;
@@ -15,19 +16,36 @@ export function Produto(props:ICreateProdutos){
    function toShop(e:any){
       e.preventDefault();
       const body ={
-         id:props.id,
+         id_produto:props.id,
          preco:props.preco,
          id_cliente:localStorage.getItem('id'),
-         forma_pagamento:""
+         forma_pagamento:"",
+         cliente_numero:"35"
 
       }
-      const header:any = {
-         token:localStorage.getItem('token')
+      try {
+         axios.post("http://localhost:3333/client/delivery",body,{
+            headers: {
+              token:localStorage.getItem('token')
+            }
+
+         })
+         .then(res =>{
+            toast.success("Pedido efetuado com sucesso")
+         })
+         .catch(err =>{
+            if(err.status == 400 || err.response.data.message == 'endereco não existe'){
+               toast.error(err.response.data.message)
+            }else if(err.status == 400 || err.response.data.message == 'produto não existe'){
+               toast.error(err.response.data.message)
+            }else if(err.status == 400 || err.response.data.message == 'Client não existe'){
+               toast.error(err.response.data.message)
+            }
+         })
+      }catch(err){
+         console.log(err)
+         toast.error("Erro ao efetuar pedido")
       }
-      const criaPedido =() =>{
-         axios.post("https://serveless-pouca-carne-production.up.railway.app/client/delivery",body,header)
-      }
-      Navigate('/shop')
    }
 
    function toLogin(e:any){
@@ -37,6 +55,18 @@ export function Produto(props:ICreateProdutos){
 
  return (
   <div className="rounded-lg bg-[#8F6252] text-white inline-block flex-1" key={props.id}>
+    <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+      />
    <img src={props.imagem} alt="" srcSet={props.imagem} className="w-full rounded-t-lg
 
 " />

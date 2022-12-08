@@ -1,6 +1,6 @@
 
 import { LogoMin } from "./assets-icons/LogoMin";
-import { User, UserCircle } from "phosphor-react";
+import { Hamburger, ShoppingCart, User, UserCircle } from "phosphor-react";
 
 export function Header(){
   
@@ -14,7 +14,11 @@ export function Header(){
       {!localStorage.getItem('token')?(
          <a href="/login" className="float-right my-auto bg-[#C9E265] flex px-4 py-2 text-xl rounded-2xl hover:bg-[#bede40]"> Login  <User size={24} weight="duotone" /></a>
       ):(
+         <div>
          <a href="/dados" className="float-right my-auto bg-[#C9E265] flex p-1 text-xl rounded-2xl hover:bg-[#bede40]"> <UserCircle size={40} weight="bold" /></a>
+         <a href="/pedidos" className="float-right my-auto p-2 mr-4 bg-[orange] rounded-full"><ShoppingCart size={32} weight="bold" /></a>
+         <a href="/" className="float-right my-auto p-2 mr-4 bg-[orange] rounded-full"><Hamburger size={32} weight="bold" /></a>
+         </div>
       )}
      </div>
     </div>

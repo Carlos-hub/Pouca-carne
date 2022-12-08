@@ -32,10 +32,10 @@ export function Signup(){
       }
       console.log("email "+email, "senha " +senha,"nome "+nome,"cpf "+cpf,"telefone "+telefone,"datanascimento "+datanascimento)
         try{
-         axios.post(`https://serveless-pouca-carne-production.up.railway.app/client/signup`,data)
+         axios.post(`http://localhost:3333/client/signup`,data)
          .then((res) =>{
            console.log(res)
-           Navigate('/');
+           Navigate('/login');
          })
          .catch((err) =>{
          })

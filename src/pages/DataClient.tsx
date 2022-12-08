@@ -23,7 +23,7 @@ export function DataClient(){
  const getDados = async () =>{
   try{
    const response = await axios.get(
-    "https://serveless-pouca-carne-production.up.railway.app/client/data/",{
+    "http://localhost:3333/client/data/",{
       headers:{
         token:localStorage.getItem('token'),
         id : localStorage.getItem('id')

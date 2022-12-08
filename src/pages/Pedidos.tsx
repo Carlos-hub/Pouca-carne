@@ -9,7 +9,7 @@ export function Pedidos(){
  const getPedidos = async () =>{
   try{
    const response = await axios.get(
-    "https://serveless-pouca-carne-production.up.railway.app/company/pedidos/",{
+    "http://localhost:3333/company/pedidos/",{
      headers: {
        token
      }
@@ -23,7 +23,6 @@ export function Pedidos(){
  useEffect(() =>{
   getPedidos();
  },[]);
- setTimeout(()=>{getPedidos(),10000});
 
  return (
    <div className="mx-auto bg-[#72584E] mb-1">

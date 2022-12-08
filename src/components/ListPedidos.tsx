@@ -34,7 +34,7 @@ export function ListPedidos(props:IGetPedidos){
  }
  function cancela(id:any){
   try{
-   axios.post(`https://serveless-pouca-carne-production.up.railway.app/company/pedidos/cancela`,{id},{
+   axios.post(`http://localhost:3333/company/pedidos/cancela`,{id},{
     headers:{
      token: localStorage.getItem('token'),
      id:localStorage.getItem('id')

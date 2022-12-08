@@ -7,6 +7,7 @@ import { Login } from './pages/Login';
 import { Pedidos } from './pages/Pedidos';
 import { PedidosClient } from './pages/PedidosClient';
 import { Signup } from './pages/Signup';
+import { LoginAdm } from './pages/LoginAdm';
 
 export function Router(){
     return (
@@ -14,10 +15,11 @@ export function Router(){
             <Route path="/login" element={<Login/>} />
             <Route path="/signup" element={<Signup/>} />
             <Route path="/" element={<Cardapio/>} />
-            <Route path='/signup/product' element={<AddProduto/>}/>
+            <Route path='/adm/product' element={<AddProduto/>}/>
             <Route path="/dados" element={<DataClient/>} />
             <Route path="/shop/adm" element={<Pedidos/>}/>
             <Route path="/pedidos" element={<PedidosClient/>}/>
+            <Route path="/adm/login" element={<LoginAdm/>}/>
         </Routes>
     )
 }
