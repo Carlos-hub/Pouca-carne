@@ -25,7 +25,7 @@ export function Pedidos(){
  },[]);
 
  return (
-   <div className="mx-auto bg-[#72584E] mb-1">
+   <div className="mx-auto bg-[#72584E] mb-1 h-[100vh]">
     <HeaderAdm/>
      <h2 className="text-4xl text-center py-2 text-white">Pedidos</h2>
        {pedidos.length === 0?(

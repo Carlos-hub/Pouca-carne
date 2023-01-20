@@ -6,12 +6,14 @@ export function PedidosClient(){
 
   const [pedidos,setPedidos] = useState<any>([])
  const token = localStorage.getItem('token')
+ const id = localStorage.getItem('id')
  const getPedidos = async () =>{
   try{
    const response = await axios.get(
     "http://localhost:3333/client/pedidos/",{
      headers: {
-       token
+       token,
+       id
      }
     });
    const data = response.data;
@@ -25,7 +27,7 @@ export function PedidosClient(){
  },[]);
 
  return (
-   <div className="mx-auto bg-[#72584E] mb-1">
+   <div className="mx-auto bg-[#72584E] mb-1 h-[100vh]">
     <Header/>
      <h2 className="text-4xl text-center py-2 text-white"> Meus Pedidos</h2>
        {pedidos.length === 0?(
