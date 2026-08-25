@@ -1,115 +1,121 @@
-import axios from "axios";
-import { NavigationArrow, User } from "phosphor-react";
-import { useEffect, useState } from "react";
+import { MapPin, User } from "phosphor-react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { Header } from "../components/Header";
 import { Input } from "../components/Input";
+import { Botao } from "../components/ui/Botao";
+import { Skeleton } from "../components/ui/Skeleton";
+import { api, mensagemDeErro } from "../lib/api";
 
-interface IClient{
-  cep: string | number | readonly string[] | undefined;
-  endereco: string | number | readonly string[] | undefined;
-  length: number;
-  id?:string;
-  nome?:string;
-  email?:string;
-  cpf?:string;
-  datanascimento?:string;
-  telefone?:string;
+interface IClient {
+  id?: string;
+  nome?: string;
+  email?: string;
+  cpf?: string;
+  telefone?: string;
+  dataNascimento?: string;
+  endereco?: string;
+  cep?: string;
 }
 
-export function DataClient(){
-  const [email,setEmail] = useState('');
-  const [senha,setSenha] = useState('');
-  const [senhaConfirma,setSenhaConfirma] = useState('');
-  const [nome,setNome] = useState('');
-  const [cep,setCep] = useState('');
-  const [endereco,setEndereco] = useState('');
-  const [telefone,setTelefone] = useState('')
+export function DataClient() {
+  const [dados, setDados] = useState<IClient>({});
+  const [carregando, setCarregando] = useState(true);
+  const [cep, setCep] = useState("");
+  const [endereco, setEndereco] = useState("");
+  const [salvando, setSalvando] = useState(false);
 
-
-
- const [dados,setDados] = useState<IClient>({
-   length: 0
- })
- const header:any = {
-  token:localStorage.getItem('token'),
-  id : localStorage.getItem('id')
- }
- const getDados = async () =>{
-  try{
-   const response = await axios.get(
-    "http://localhost:3333/client/data/",{
-      headers:{
-        token:localStorage.getItem('token'),
-        id : localStorage.getItem('id')
-      }
+  const buscar = useCallback(async () => {
+    try {
+      const res = await api.get<IClient>("/client/data");
+      setDados(res.data);
+      setCep(res.data.cep ?? "");
+      setEndereco(res.data.endereco ?? "");
+    } catch (err: any) {
+      toast.error(mensagemDeErro(err, "Não foi possível carregar seus dados"));
+    } finally {
+      setCarregando(false);
     }
-   )
-   .then(res =>{
-      if(res.status == 201){
-        toast.success("Endereço criado com sucesso")
-      }
-   })
-   .catch(err =>{
-    if(err.response.data.message === 'Credentials invalid' || err.response.status == 400){
-      toast.error("Erro Consulte o administrador")
-    }
-   })
-   const data:any = response.data;
-   console.log(data)
-   setDados(data)
-  }catch(error){
-   console.log(error);
-  }
- }
- useEffect(() =>{
-  getDados();
- },[]);
+  }, []);
 
-  function addEndereco(){
-    const body = {
-      id_client: localStorage.getItem('id'),
-      nome_rua: endereco,
-      cep: cep
-    }
-    try{
-      axios.post('http://localhost:3333/client/endereco',{
-      body,
-      headers:{
-        token:localStorage.getItem('token')
-      }
-    })
-    }catch(err){
-        console.log(err);
+  useEffect(() => {
+    buscar();
+  }, [buscar]);
+
+  async function salvarEndereco(e: React.FormEvent) {
+    e.preventDefault();
+    setSalvando(true);
+    try {
+      await api.post("/client/endereco", { nome_rua: endereco, cep });
+      toast.success("Endereço salvo");
+      buscar();
+    } catch (err: any) {
+      toast.error(mensagemDeErro(err, "Não foi possível salvar o endereço"));
+    } finally {
+      setSalvando(false);
     }
   }
 
- return(
-  <div className="h-full">
+  return (
+    <div className="min-h-screen">
+      <Header />
 
-      <div className="grid grid-cols-2 px-3 h-[50vw] pb-3 h-full" >
-      {dados.length === 0 ? (
-      <p className="text-center">Carregando...</p>
-      ) : (
-          <div key={dados.id} className="grid grid-row-auto space-y-4">
-          <span className="mx-auto flex text-xl">Meus dados <User size={40}/></span>
-          <input className="p-2 rounded-2xl border-2 border-gray-700 hover:border-gray-300 ease-linear duration-300" type="text" defaultValue={dados.nome}></input>
-          <input className="p-2 rounded-2xl border-2 border-gray-700 hover:border-gray-300 ease-linear duration-300" type="text" defaultValue={dados.email}></input>
-          <input className="p-2 rounded-2xl border-2 border-gray-700 hover:border-gray-300 ease-linear duration-300" type="date" defaultValue={dados.datanascimento}></input>
-          <input className="p-2 rounded-2xl border-2 border-gray-700 hover:border-gray-300 ease-linear duration-300" type="text" defaultValue={dados.cpf}></input>
-          <input className="p-2 rounded-2xl border-2 border-gray-700 hover:border-gray-300 ease-linear duration-300" type="text" defaultValue={dados.telefone}></input>
-          <div className="flex">
-            <div><button className="bg-[#C9E265] p-2 rounded-2xl">Atualizar dados</button></div>
-          </div>
-          
-          </div>
-        )}
-        <div className="bg-[#582222] block space-y-4 pb-5 h-full rounded-md">
-              <span className="mx-auto flex text-xl py-auto">Meus endereços <NavigationArrow size={30} weight="bold" /></span>
-              <input placeholder="CEP" className="bg-transparent p-2 rounded-2xl border-2 hover:border-gray-300 ease-linear duration-300 w-10/12" defaultValue={dados.cep} value={cep} onChange={(e:any)=>setCep(e.target.value)}/>
-              <input placeholder="Digite seu endereço" className="bg-transparent p-2 rounded-2xl border-2 hover:border-gray-300 ease-linear duration-300 w-10/12" defaultValue={dados.endereco} value={endereco} onChange={(e:any)=>setEndereco(e.target.value)}/>
-              <button className="bg-[#C9E265] p-2 rounded-full" onClick={addEndereco()}>Atualizar endereço</button>
+      <section className="mx-auto max-w-4xl px-4 py-12">
+        <div className="mb-8 border-b border-grill pb-4">
+          <p className="font-mono text-xs uppercase tracking-[0.28em] text-mustard">Sua conta</p>
+          <h1 className="mt-2 font-display text-4xl font-extrabold tracking-[-0.04em]">Meus dados</h1>
         </div>
-      </div>
-   </div>
- )
+
+        <div className="grid gap-6 laptop:grid-cols-2">
+          <article className="rounded-2xl border border-grill bg-smoke p-6">
+            <h2 className="flex items-center gap-2 font-display text-xl font-semibold tracking-tight">
+              <User size={22} weight="bold" className="text-ember" />
+              Cadastro
+            </h2>
+
+            {carregando ? (
+              <div className="mt-6 space-y-3">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <Skeleton key={i} className="h-12" />
+                ))}
+              </div>
+            ) : (
+              <dl className="mt-6 divide-y divide-grill">
+                {[
+                  ["Nome", dados.nome],
+                  ["Email", dados.email],
+                  ["CPF", dados.cpf],
+                  ["Telefone", dados.telefone],
+                  ["Nascimento", dados.dataNascimento],
+                ].map(([rotulo, valor]) => (
+                  <div key={rotulo} className="flex items-baseline justify-between gap-4 py-3">
+                    <dt className="font-mono text-xs uppercase tracking-[0.18em] text-ash">{rotulo}</dt>
+                    <dd className="truncate text-right">{valor || "—"}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </article>
+
+          <article className="rounded-2xl border border-grill bg-smoke p-6">
+            <h2 className="flex items-center gap-2 font-display text-xl font-semibold tracking-tight">
+              <MapPin size={22} weight="bold" className="text-ember" />
+              Endereço de entrega
+            </h2>
+            <p className="mt-2 text-sm text-ash">
+              {dados.endereco ? "Salve de novo para atualizar." : "Cadastre um endereço antes do primeiro pedido."}
+            </p>
+
+            <form onSubmit={salvarEndereco} className="mt-6 space-y-4">
+              <Input rotulo="CEP" inputMode="numeric" placeholder="00000-000" value={cep} onChange={setCep} required />
+              <Input rotulo="Rua e número" placeholder="Rua das Hamburguerias, 42" value={endereco} onChange={setEndereco} required />
+              <Botao type="submit" carregando={salvando} className="w-full">
+                Salvar endereço
+              </Botao>
+            </form>
+          </article>
+        </div>
+      </section>
+    </div>
+  );
 }

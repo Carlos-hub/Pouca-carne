@@ -1,116 +1,79 @@
-
-  import { Logo } from "../components/assets-icons/Logo";
-  import { Input } from "../components/Input";
-  import { User } from "phosphor-react";
-
-import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AuthLayout } from "../components/AuthLayout";
+import { Input } from "../components/Input";
+import { Botao } from "../components/ui/Botao";
+import { api, mensagemDeErro } from "../lib/api";
 
-export function Signup(){
-  const Navigate = useNavigate();
-  const [email,setEmail] = useState('');
-  const [senha,setSenha] = useState('');
-  const [senhaConfirma,setSenhaConfirma] = useState('');
-  const [nome,setNome] = useState('');
-  const [cpf,setCpf] = useState('');
-  const [datanascimento,setDatanascimento] = useState('');
-  const [telefone,setTelefone] = useState('')
+export function Signup() {
+  const navegar = useNavigate();
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [datanascimento, setDatanascimento] = useState("");
+  const [senha, setSenha] = useState("");
+  const [senhaConfirma, setSenhaConfirma] = useState("");
+  const [enviando, setEnviando] = useState(false);
 
+  const senhasDiferem = senhaConfirma.length > 0 && senha !== senhaConfirma;
 
-
-
-  function onSubmit(e:any){
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-      const data = {
-        nome,
-        cpf,
-        datanascimento,
-        telefone,
-        email,
-        senha
-      }
-      console.log("email "+email, "senha " +senha,"nome "+nome,"cpf "+cpf,"telefone "+telefone,"datanascimento "+datanascimento)
-        try{
-         axios.post(`http://localhost:3333/client/signup`,data)
-         .then((res) =>{
-           console.log(res)
-           Navigate('/login');
-         })
-         .catch((err) =>{
-         })
-         }catch(err){
-         console.error(err)
-        }
+    if (senhasDiferem) return;
+
+    setEnviando(true);
+    try {
+      await api.post("/client/signup", { nome, cpf, datanascimento, telefone, email, senha });
+      toast.success("Conta criada. Faça login para pedir.");
+      navegar("/login");
+    } catch (err: any) {
+      toast.error(mensagemDeErro(err, "Não foi possível criar a conta"));
+    } finally {
+      setEnviando(false);
     }
+  }
 
-
- return(
-    <div className=" bg-[#361F17] w-3/5 align-middle justify-items-center rounded-xl h-fit self-center mx-auto top-4 mt-10 p-3">
-      <div className="mx-auto h-36 mb-4">
-        <Logo/>
-      </div>
-      <div>
-        <div className="justify-items-center self-center mx-5">
-         <div className="grid grid-cols-2 gap-2">
-            <label className="mt-2">
-            <p className="text-[#C9E265]">Nome</p>
-            <Input classname="flex rounded-md p-1 w-full" type="text" title="name" placeholder="Nome" onChange={(e:any)=>setNome(e.target.value)} value={nome}/>
-            </label>
-            <label className="mt-2">
-            <p className="text-[#C9E265]">Nascimento</p>
-            <Input classname="flex rounded-md p-1 w-full" type="date" title="date" placeholder="XX/XX/XXXX" onChange={(e:any)=>setDatanascimento(e.target.value)} value={datanascimento}/>
-            </label>
-         </div>
-         <div className="grid grid-cols-2 gap-2">
-             <label className="mt-2">
-             <p className="text-[#C9E265]">CPF</p>
-             <Input classname="flex rounded-md p-1 w-full" type="text" title="cpf" placeholder="XXX.XXX.XXX-XX" onChange={(e:any)=>setCpf(e.target.value)} value={cpf}/>
-             </label>
-             <label className="mt-2">
-             <p className="text-[#C9E265]">Telefone</p>
-             <Input classname="flex rounded-md p-1 w-full" type="tel" title="phone" placeholder="(XX) X XXXX-XXXX" onChange={(e:any)=>setTelefone(e.target.value)} value={telefone}/>
-             </label>
-         </div>
-         <label className="mt-2">
-             <p className="text-[#C9E265]">E-mail</p>
-             <Input classname="flex rounded-md p-1 w-full" onChange={(e:any)=>setEmail(e.target.value)} value={email} type="email" title="email" placeholder="teste@gmail.com"/>
-         </label>
-         <div className="w-1/2">
-         <label className="mt-2">
-           <p className="text-[#C9E265]">Senha</p>
-           <Input classname="flex rounded-md p-1 w-full" type="password" title="email" placeholder="**********" onChange={(e:any) =>setSenha(e.target.value)} value={senha}/>
-         </label>
-         </div>
-         <div className="w-1/2">
-         <label className="mt-2">
-           <p className="text-[#C9E265]">Repita sua senha</p>
-           <Input classname="flex rounded-md p-1 w-full" type="password" title="email" placeholder="**********" onChange={(e:any) =>setSenhaConfirma(e.target.value)} value={senhaConfirma}/>
-         </label>
-         </div>
-         <div className="grid grid-cols-2 gap-2">
-           <div className="w-1/2">
-           <label className="mt-2">
-           </label>
-           </div>
-           <div className="w-1/2  justify-self-end">
-           <label className="mt-2">
-             {senha!=senhaConfirma ||senha==""?
-             (
-              <button disabled className="bg-[#C9E265] text-black p-3 rounded-xl opacity-50" onClick={e =>onSubmit(e)}>Cadastrar</button>
-              ):(
-                <button className="bg-[#C9E265] text-black p-3 rounded-xl" onClick={e =>onSubmit(e)}>Cadastrar</button>
-              )
-             }
-            
-           </label>
-           </div>
-         </div>
-         <div>
-          
-         </div>
+  return (
+    <AuthLayout
+      titulo="Criar conta"
+      subtitulo="Leva um minuto. Depois é só escolher e esperar."
+      frase="Primeiro pedido em três campos e um clique."
+      rodape={
+        <>
+          Já tem conta?{" "}
+          <Link to="/login" className="text-ember underline-offset-4 hover:underline">
+            Entrar
+          </Link>
+        </>
+      }
+    >
+      <form onSubmit={onSubmit} className="space-y-4">
+        <Input rotulo="Nome" placeholder="Seu nome" value={nome} onChange={setNome} required />
+        <Input rotulo="Email" type="email" autoComplete="email" placeholder="voce@email.com" value={email} onChange={setEmail} required />
+        <div className="grid gap-4 tablet:grid-cols-2">
+          <Input rotulo="CPF" inputMode="numeric" placeholder="000.000.000-00" value={cpf} onChange={setCpf} required />
+          <Input rotulo="Telefone" inputMode="tel" placeholder="(00) 00000-0000" value={telefone} onChange={setTelefone} required />
         </div>
-      </div>
-    </div>
-   )
- }
+        <Input rotulo="Data de nascimento" type="date" value={datanascimento} onChange={setDatanascimento} />
+        <div className="grid gap-4 tablet:grid-cols-2">
+          <Input rotulo="Senha" type="password" autoComplete="new-password" placeholder="Mínimo 6 caracteres" value={senha} onChange={setSenha} required minLength={6} />
+          <Input
+            rotulo="Repita a senha"
+            type="password"
+            autoComplete="new-password"
+            placeholder="Repita a senha"
+            value={senhaConfirma}
+            onChange={setSenhaConfirma}
+            erro={senhasDiferem ? "As senhas não coincidem" : undefined}
+            required
+          />
+        </div>
+        <Botao type="submit" carregando={enviando} disabled={senhasDiferem} className="w-full">
+          Criar conta
+        </Botao>
+      </form>
+    </AuthLayout>
+  );
+}
